@@ -26,7 +26,7 @@ public class CodeTest {
         intInput.close();
         strInput.close();
 
-        // Showing the file preset in this Directory
+        // Showing the file present in this Directory
 
         File Folder = new File(PathOfFolder);
         if(Folder.isDirectory()){

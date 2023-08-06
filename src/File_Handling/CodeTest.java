@@ -1,37 +1,70 @@
 package File_Handling;
 
 import java.io.File;
-import java.util.Arrays;
+import java.io.IOException;
+import java.util.ArrayList;
+//import java.util.Arrays;
 import java.util.Scanner;
+import java.util.InputMismatchException;
+import java.util.List;
 
 public class CodeTest {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
 
         // Adding the files provided by user
 
         String PathOfFolder = "C:\\Users\\user\\Desktop\\pahse-I\\src\\File_Handling\\TestFolder";
         Scanner intInput = new Scanner(System.in);
         Scanner strInput = new Scanner(System.in);
+        int num;
+        //Do-while loop to get the valid input from the user
+        //if the user enters something other than an integer 
+        //(e.g., "abc" or "1.23"), the nextInt() method will throw
+        // an InputMismatchException, and the invalid input ("abc" or "1.23") will remain in the buffer.
+        // If the program doesn't clear this invalid input from the buffer, it will cause an infinite loop
+        // because the same invalid input will be read repeatedly.
+        do{
+            try{
         System.out.print("How many files you want to add:- ");
-        int num = intInput.nextInt();
-        //sc.nextLine();
-        System.out.println("Enter the name of files you want to add");
-        for(int i=1; i<=num; i++){
-            System.out.print(i+". ");
-        String fileName = strInput.nextLine();
-        File file = new File(PathOfFolder+File.separator+fileName);
-        file.createNewFile();
+        num = intInput.nextInt();
+        break;
+            }
+        catch(InputMismatchException e){
+            System.out.println("please Enter a valid number");
+            System.out.println();
+            intInput.next();// To clear the Scanner Buffer so that it will take a new value
         }
-        System.out.println("all files are created successfulluy");
+    }
+        while(true);
+        //We can use [sc.nextLine();] if not taking different variable for intesger and string to avoid enter as a value from user
+            File Folder = new File(PathOfFolder);
+            List<String> al = new ArrayList<>();
+            System.out.println("Enter the name of files you want to add");
+            for(int i=1; i<=num; i++){
+                System.out.print(i+". ");
+                String fileName = strInput.nextLine();
+                File[] files = Folder.listFiles();
+                for(File f2:files){
+                    al.add(f2.getName().toLowerCase());
+                }
+                while(al.contains(fileName.toLowerCase())){
+                    System.out.println("File with the same name already exists.");
+                    System.out.print("Please enter a different filename:  ");
+                    fileName = strInput.nextLine();
+                }
+                File file = new File(PathOfFolder+File.separator+fileName);
+                file.createNewFile();
+            
+            }
+            System.out.println("all files are created successfully");
         intInput.close();
         strInput.close();
 
         // Showing the file present in this Directory
-
-        File Folder = new File(PathOfFolder);
+        //File Folder = new File(PathOfFolder);
         if(Folder.isDirectory()){
-            File[] files = Folder.listFiles();
-            System.out.println(Arrays.toString(files));
+        File[] files = Folder.listFiles();
+            //System.out.println(Arrays.toString(files));
             if(files != null && files.length > 0){
                 System.out.println("Folder contains the following files:");
                 for(File file1 : files){

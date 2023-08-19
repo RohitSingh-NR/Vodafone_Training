@@ -45,9 +45,11 @@ public class CodeTest {
                 String fileName = strInput.nextLine();
                 File[] files = Folder.listFiles();
                 for(File f2:files){
-                    al.add(f2.getName().toLowerCase());
+                    //al.add(f2.getName().toLowerCase());
+                    al.add(f2.getName());
                 }
-                while(al.contains(fileName.toLowerCase())){
+                //while(al.contains(fileName.toLowerCase())){
+                    while(al.contains(fileName)){
                     System.out.println("File with the same name already exists.");
                     System.out.print("Please enter a different filename:  ");
                     fileName = strInput.nextLine();
@@ -57,8 +59,6 @@ public class CodeTest {
             
             }
             System.out.println("all files are created successfully");
-        intInput.close();
-        strInput.close();
 
         // Showing the file present in this Directory
         //File Folder = new File(PathOfFolder);
@@ -69,7 +69,7 @@ public class CodeTest {
                 System.out.println("Folder contains the following files:");
                 for(File file1 : files){
                     System.out.println(file1.getName());
-                    file1.delete();
+                    //file1.delete();
                 }
             }
             else{
@@ -79,6 +79,25 @@ public class CodeTest {
         else{
             System.out.println("Directory doesn't exist or Not a Directory");
         }
-        
+        System.out.println("Enter the name of file you want to delete");
+        String delFile = strInput.nextLine();
+        File fileToDelete = new File(Folder,delFile);
+        if(fileToDelete.exists()){
+            fileToDelete.delete();
+            System.out.println(fileToDelete+"File deleted successfully");
+        }
+        System.out.println("Enter filename to find from the directory");
+        String searchFile = strInput.nextLine();
+        File fileToSearch = new File(Folder,searchFile);
+        if (fileToSearch.exists() && fileToSearch.isFile()) {
+            System.out.println("Please find the File details below:");
+            System.out.println("Name: " + fileToSearch.getName());
+            System.out.println("Path: " + fileToSearch.getAbsolutePath());
+            System.out.println("Size: " + fileToSearch.length() + " bytes");
+        } else {
+            System.out.println("The specified file does not exist.");
+        }
+        intInput.close();
+        strInput.close();
     }
 }
